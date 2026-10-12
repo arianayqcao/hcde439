@@ -3,22 +3,63 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, maximum-scale=1.0" />
-
     <title>Ariana's HCDE 439 Physical Computing Page!</title>
-
     <link href="style.css" rel="stylesheet" type="text/css" />
   </head>
   <body>
-    <h1>Example Student's Assignment 1!</h1>
+    <h1>Ariana's Assignment 1: Blink!</h1>
     <div class="header">
-      <img src="led1-graph.png" />
-      <img src="led2-graph.png" />
-      <img src="led3-graph.png" />
-      <video width="540" height="960" controls>
-        <source src="blinking3.mp4" type="video/mp4">
-      </video>
-
       <p>Here is all the documentation for assignment 1!</p>
+    </div>
+
+    <!-- Schematic -->
+    <section>
+      <h2>
+        Schematic
+      </h2>
+      <figure>
+        <img src="assets/parallel-calculations.jpg">
+        <figcaption>
+          Parallel calculations. 
+          Caption each image with explanation, e.g. why did you pick these values for the resistors. 
+          Each line of code must be commented with an explanation.
+        </figcaption>
+      </figure>
+    </section>
+
+    <!-- Resistance Calculation -->
+    <section>
+      <h2>
+        Resistor Calculation
+      </h2>
+      <p></p>
+    </section>
+
+    <!-- Circuit -->
+    <section>
+      <h2>
+        Circuit
+      </h2>
+      <figure>
+        <img src="assets/three-leds-breadboard.jpg" alt="breadboard with three leds, one lit up">
+        <figcaption>My breadboard circuit. LED1 is pin 12. LED2 is pin 10. LED3 is pin 8.</figcaption>
+      </figure>
+    </section>
+
+    <!-- Circuit Operation -->
+    <section>
+      <h2>
+        Circuit Operation
+      </h2>
+      <figure>
+        <img src="blinking3.gif" alt="GIF of three LEDs blinking, one after the other"> 
+        <figcaption>The LEDs light up, one after the other, in a loop.</figcaption>    
+      </figure>
+    </section>
+
+    <!-- Code Snippet -->
+    <section>
+      <h2>Code Snippet</h2>
       <pre><code>function greet() {
         int LED1 = 12;
         int LED2 = 10;
@@ -48,7 +89,38 @@
           delay(1000);                      // wait for a second
         }
       }</code></pre>
+    </section>
 
-    </div>
+    <!-- Additional Questions -->
+    <section>
+      <h2>Questions</h2>
+
+      <h3>Draw a graph where the X axis is time and the Y axis is voltage across the LEDs. Draw a line for each of your 3 LEDs.</h3>
+      <figure>
+        <img src="voltage-v-time-graph.png">
+        <figcaption>
+          This is the voltage over time for my 3 LEDs. The red line is LED1, green is LED2, and blue is LED3.
+          I graphed up until 6 seconds (or 6000 milliseconds).
+        </figcaption>
+      </figure>
+
+      <h3>2: How many LEDs could you blink independently with your Arduino? How much current would that draw?</h3>
+      <p>
+        I could technically try to blink 13 LEDs, one for each pin in the Arduino. 
+        But that would probably draw ~260 mA of current, which exceeds the maximum total current, which would burn out the Arduino.
+        So I can actually only blink 9 LEDs safely, which would draw ~180 mA.
+      </p>
+
+      <h3>3: How fast do you need to blink your LEDs until you no longer can tell that they are blinking?</h3>
+      <p>I need to blink my LEDs Xms before I can no longer tell.</p>
+
+      <h3>4: Did you use AI tools in completing this assignment?</h3>
+      <p>I did use AI tools. I used Claude to refresh my memory on how to write HTML. 
+        It gave me more information than I needed, so I just used it for formatting. 
+        Everything else is my own thinking. 
+        Chat: https://claude.ai/share/7d2aa6ca-e254-4104-92de-5ebaa89c192e
+      </p>
+    </section>
+
   </body>
 </html>
