@@ -36,7 +36,12 @@
       <figure>
         <img src="assets/resistance-calculations.JPG" height="400px" alt="paper with calculations for resistor ohms">
         <figcaption>
-          Peak voltage is 5V. Each red LED is 2V.
+          Peak voltage is 5V. Each red LED is 2V. We're recmmend 20 mA through each one.
+          Because the lights aren't all on at the same time, I figured 20mA wouldn't burn
+          out the Arduino. 
+          I used 100 ohm resistor (since there's no 150 ohm). 
+          I used KCL, KVL, and Ohm's Law in combination to calculate! 
+          Also, I accidentally wrote R2 for R1's Voltage. It should be VR1 (but I can't find the original file!).
         </figcaption>
       </figure>
       <p></p>
@@ -154,6 +159,9 @@
         It gave me more information than I needed, so I just used it for formatting. 
         Everything else is my own thinking. 
         Chat: https://claude.ai/share/7d2aa6ca-e254-4104-92de-5ebaa89c192e
+        It was helpful for verifying that my calculations were correct. I was confused 
+        on whether I needed to use 20mA or 10mA in my calculations for resistance, and 
+        I was able to realize that was only if all LEDs were on at once.
       </p>
     </section>
 
