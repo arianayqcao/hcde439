@@ -18,11 +18,11 @@
         Schematic
       </h2>
       <figure>
-        <img src="assets/parallel-calculations.jpg" height="400px" alt="calculations and schematic on whiteboard">
+        <img src="assets/schematic.JPG" height="400px" alt="calculations and schematic on whiteboard">
         <figcaption>
-          Parallel calculations. 
-          Caption each image with explanation, e.g. why did you pick these values for the resistors. 
-          Each line of code must be commented with an explanation.
+          Schematic of my circuit. Each LED has its own 100 ohm resistor. 
+          The 3 branches are in parallel. Each LED connects to a pin 
+          (LED1 to pin 12, LED2 to pin 10, LED3 to pin 8), and to ground.
         </figcaption>
       </figure>
     </section>
@@ -34,7 +34,7 @@
         Resistor Calculation
       </h2>
       <figure>
-        <img src="assets/resistor-calculation-paper.png" height="400px" alt="paper with calculations for resistor ohms">
+        <img src="assets/resistance-calculations.JPG" height="400px" alt="paper with calculations for resistor ohms">
         <figcaption>
           Peak voltage is 5V. Each red LED is 2V.
         </figcaption>
@@ -70,35 +70,52 @@
     <!-- Code Snippet -->
     <section>
       <h2>Code Snippet</h2>
-      <pre><code>function greet() {
+      <pre><code>
+        // pin number for LED1
         int LED1 = 12;
+        // pin number for LED2
         int LED2 = 10;
+        // pin number for LED3
         int LED3 = 8;
 
         // the setup function runs once when you press reset or power the board
         void setup() {
-          // initialize digital pin LED_BUILTIN as an output.
+          // initialize digital pin LED1 as an output.
           pinMode(LED1, OUTPUT);
+          // initialize digital pin LED2 as an output.
           pinMode(LED2, OUTPUT);
+          // initialize digital pin LED3 as an output.
           pinMode(LED3, OUTPUT);
         }
 
         // the loop function runs over and over again forever
         void loop() {
-          digitalWrite(LED1, HIGH);  // change state of the LED by setting the pin to the HIGH voltage level
-          digitalWrite(LED2, LOW);  // change state of the LED by setting the pin to the HIGH voltage level
-          digitalWrite(LED3, LOW);  // change state of the LED by setting the pin to the HIGH voltage level
-          delay(1000);                      // wait for a second
-          digitalWrite(LED1, LOW);   // change state of the LED by setting the pin to the LOW voltage level
-          digitalWrite(LED2, HIGH);   // change state of the LED by setting the pin to the LOW voltage level
-          digitalWrite(LED3, LOW);  // change state of the LED by setting the pin to the HIGH voltage level
-          delay(1000);                      // wait for a second  digitalWrite(LED1, LOW);   // change state of the LED by setting the pin to the LOW voltage level
-          digitalWrite(LED1, LOW);   // change state of the LED by setting the pin to the LOW voltage level
-          digitalWrite(LED2, LOW);   // change state of the LED by setting the pin to the LOW voltage level
-          digitalWrite(LED3, HIGH);  // change state of the LED by setting the pin to the HIGH voltage level
-          delay(1000);                      // wait for a second
+          // change state of LED1 by setting the pin to the HIGH (5V) voltage level
+          digitalWrite(LED1, HIGH);
+          // change state of LED2 by setting the pin to the LOW (0V) voltage level
+          digitalWrite(LED2, LOW);
+          // change state of LED3 by setting the pin to the LOW (0V) voltage level
+          digitalWrite(LED3, LOW); 
+          // wait for a second (LED1 is bright for 1s)
+          delay(1000); 
+          // change state of LED1 by setting the pin to the LOW (0V) voltage level
+          digitalWrite(LED1, LOW);
+          // change state of LED2 by setting the pin to the HIGH (5V) voltage level
+          digitalWrite(LED2, HIGH);
+          // change state of LED3 by setting the pin to the LOW (0V) voltage level
+          digitalWrite(LED3, LOW); 
+          // wait for a second (LED2 is bright for 1s)
+          delay(1000);   digitalWrite(LED1, LOW) ;
+          // change state of LED1 by setting the pin to the LOW (0V) voltage level
+          digitalWrite(LED1, LOW);
+          // change state of LED2 by setting the pin to the LOW (0V) voltage level
+          digitalWrite(LED2, LOW);
+          // change state of LED1 by setting the pin to the HIGH (5V) voltage level
+          digitalWrite(LED3, HIGH); 
+          // wait for a second (LED3 is bright for 1s)
+          delay(1000); 
         }
-      }</code></pre>
+      </code></pre>
     </section>
     <br>
 
