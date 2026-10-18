@@ -4,15 +4,189 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, maximum-scale=1.0" />
 
-    <title>Example Student's HCDE 439 Physical Computing Page!</title>
+    <title>Ariana's HCDE 439 Physical Computing Page!</title>
 
     <link href="style.css" rel="stylesheet" type="text/css" />
   </head>
   <body>
-    <h1>Example Student's Assignment 2!</h1>
+    <h1>Ariana's Assignment 2!</h1>
     <div class="header">
       <img src="red-panda.jpg" />
       <p>Here is all the documentation for assignment 2!</p>
+      <p>
+        Brief: You work for a toy company, and the chief 
+        innovation officer wants you to make a prototype for a new light-up toy.
+      </p>
+
+    <!-- Schematic -->
+    <section>
+      <h2>
+        Schematic
+      </h2>
+      <figure>
+        <img src="assets/schematic.JPG" height="400px" alt="calculations and schematic on whiteboard">
+        <figcaption>
+          Schematic of my circuit. Each LED has its own 100 ohm resistor. 
+          The 3 branches are in parallel. Each LED connects to a pin 
+          (LED1 to pin 12, LED2 to pin 10, LED3 to pin 8), and to ground.
+        </figcaption>
+      </figure>
+    </section>
+    <br>
+
+    <!-- Resistance Calculation -->
+    <section>
+      <h2>
+        Resistor Calculation
+      </h2>
+      <figure>
+        <img src="assets/resistance-calculations.JPG" height="400px" alt="paper with calculations for resistor ohms">
+        <figcaption>
+          Peak voltage is 5V. Each red LED is 2V. We're recmmend 20 mA through each one.
+          Because the lights aren't all on at the same time, I figured 20mA wouldn't burn
+          out the Arduino. 
+          I used 100 ohm resistor (since there's no 150 ohm). 
+          I used KCL, KVL, and Ohm's Law in combination to calculate! 
+          Also, I accidentally wrote R2 for R1's Voltage. It should be VR1 (but I can't find the original file!).
+        </figcaption>
+      </figure>
+      <p></p>
+    </section>
+    <br>
+
+    <!-- Circuit -->
+    <section>
+      <h2>
+        Circuit
+      </h2>
+      <figure>
+        <img src="assets/three-leds-breadboard.jpg" height="400px" alt="breadboard with three leds, one lit up">
+        <figcaption>My breadboard circuit. LED1 is pin 12. LED2 is pin 10. LED3 is pin 8.</figcaption>
+      </figure>
+    </section>
+    <br>
+
+    <!-- Circuit Operation -->
+    <section>
+      <h2>
+        Circuit Operation
+      </h2>
+      <figure>
+        <img src="assets/blinking3.gif" alt="GIF of three LEDs blinking, one after the other" style="max-height: 800px;"> 
+        <figcaption>The LEDs light up, one after the other, in a loop.</figcaption>    
+      </figure>
+    </section>
+    <br>
+
+    <!-- Code Snippet -->
+    <section>
+      <h2>Code Snippet</h2>
+      <pre><code>
+        // pin number for LED1
+        int LED1 = 12;
+        // pin number for LED2
+        int LED2 = 10;
+        // pin number for LED3
+        int LED3 = 8;
+
+        // the setup function runs once when you press reset or power the board
+        void setup() {
+          // initialize digital pin LED1 as an output.
+          pinMode(LED1, OUTPUT);
+          // initialize digital pin LED2 as an output.
+          pinMode(LED2, OUTPUT);
+          // initialize digital pin LED3 as an output.
+          pinMode(LED3, OUTPUT);
+        }
+
+        // the loop function runs over and over again forever
+        void loop() {
+          // change state of LED1 by setting the pin to the HIGH (5V) voltage level
+          digitalWrite(LED1, HIGH);
+          // change state of LED2 by setting the pin to the LOW (0V) voltage level
+          digitalWrite(LED2, LOW);
+          // change state of LED3 by setting the pin to the LOW (0V) voltage level
+          digitalWrite(LED3, LOW); 
+          // wait for a second (LED1 is bright for 1s)
+          delay(1000); 
+          // change state of LED1 by setting the pin to the LOW (0V) voltage level
+          digitalWrite(LED1, LOW);
+          // change state of LED2 by setting the pin to the HIGH (5V) voltage level
+          digitalWrite(LED2, HIGH);
+          // change state of LED3 by setting the pin to the LOW (0V) voltage level
+          digitalWrite(LED3, LOW); 
+          // wait for a second (LED2 is bright for 1s)
+          delay(1000);   digitalWrite(LED1, LOW) ;
+          // change state of LED1 by setting the pin to the LOW (0V) voltage level
+          digitalWrite(LED1, LOW);
+          // change state of LED2 by setting the pin to the LOW (0V) voltage level
+          digitalWrite(LED2, LOW);
+          // change state of LED1 by setting the pin to the HIGH (5V) voltage level
+          digitalWrite(LED3, HIGH); 
+          // wait for a second (LED3 is bright for 1s)
+          delay(1000); 
+        }
+      </code></pre>
+    </section>
+    <br>
+
+    <!-- Additional Questions -->
+    <section>
+      <h2>Questions</h2>
+
+      <h3>
+        1: Draw a chart where the X axis is time and the Y axis is 
+        voltage. Draw 3 lines representing the voltage across an LED 
+        with analogWrite(led, 64), analogWrite(led, 128), and 
+        analogWrite(led, 255).
+      </h3>
+      <figure>
+        <img src="assets/voltage-v-time-graph.png">
+        <figcaption>
+          This is the voltage over time for my 3 LEDs. The red line is LED1, green is LED2, and blue is LED3.
+          I graphed up until 6 seconds (or 6000 milliseconds).
+        </figcaption>
+      </figure>
+      <br>
+
+      <h3>
+        2: If all your LEDs were on simultaneously, what would the 
+        total current draw be? Is this above or below the total Arduino 
+        current draw limits? If all your LEDs were on, how long would 
+        your circuit run if powered by a 1200 mAh battery?
+      </h3>
+      <p>
+        I could technically try to blink 13 LEDs, one for each pin in the Arduino. 
+        But that would probably draw ~260 mA of current, which exceeds the maximum total current, which would burn out the Arduino.
+        So I can actually only blink 9 LEDs safely, which would draw ~180 mA.
+      </p>
+      <br>
+
+      <h3>
+        3: Measure and record the actual voltage across one of your LEDs 
+        when it's on. How does this compare to the theoretical forward 
+        voltage for your LED color?
+      </h3>
+      <p>
+        I need to blink my LEDs about 15-20ms before I can no longer tell.
+        Around 20ms is when it stops looking like blinking, and more like a slight flicker. 
+        Around 10ms is when it really completely looks constant.
+      </p>
+      <br>
+
+      <h3>
+        4: Did you use AI tools in completing this assignment?
+      </h3>
+      <p>I did use AI tools. I used Claude to refresh my memory on how to write HTML. 
+        It gave me more information than I needed, so I just used it for formatting. 
+        Everything else is my own thinking. 
+        Chat: https://claude.ai/share/7d2aa6ca-e254-4104-92de-5ebaa89c192e
+        It was helpful for verifying that my calculations were correct. I was confused 
+        on whether I needed to use 20mA or 10mA in my calculations for resistance, and 
+        I was able to realize that was only if all LEDs were on at once.
+      </p>
+    </section>
+
     </div>
   </body>
 </html>
