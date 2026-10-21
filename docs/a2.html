@@ -72,7 +72,7 @@
         Circuit Operation
       </h2>
       <figure>
-        <img src="assets/blinking3.gif" alt="GIF of three LEDs blinking, one after the other" style="max-height: 800px;"> 
+        <img src="assets/a2/circuit-operation-gif.gif" alt="GIF of three LEDs blinking, one after the other" style="max-height: 800px;"> 
         <figcaption>The LEDs light up, one after the other, in a loop.</figcaption>    
       </figure>
     </section>
@@ -82,49 +82,61 @@
     <section>
       <h2>Code Snippet</h2>
       <pre><code>
-        // pin number for LED1
+        // pin for LED1 (on/off)
         int LED1 = 12;
-        // pin number for LED2
+        // pin for LED2 (PWM pin, for fade)
         int LED2 = 10;
-        // pin number for LED3
+        // pin for LED3 (on/off)
         int LED3 = 8;
+        // pin for button
+        int BUTTON = 2;
 
-        // the setup function runs once when you press reset or power the board
+        // runs once at power on or reset
         void setup() {
-          // initialize digital pin LED1 as an output.
+          // LED1 pin is an output
           pinMode(LED1, OUTPUT);
-          // initialize digital pin LED2 as an output.
+          // LED2 pin is an output
           pinMode(LED2, OUTPUT);
-          // initialize digital pin LED3 as an output.
+          // LED3 pin is an output
           pinMode(LED3, OUTPUT);
+          // button pin is an input
+          pinMode(BUTTON, INPUT);
         }
 
-        // the loop function runs over and over again forever
+        // the loop routine runs over and over again forever:
         void loop() {
-          // change state of LED1 by setting the pin to the HIGH (5V) voltage level
-          digitalWrite(LED1, HIGH);
-          // change state of LED2 by setting the pin to the LOW (0V) voltage level
-          digitalWrite(LED2, LOW);
-          // change state of LED3 by setting the pin to the LOW (0V) voltage level
-          digitalWrite(LED3, LOW); 
-          // wait for a second (LED1 is bright for 1s)
-          delay(1000); 
-          // change state of LED1 by setting the pin to the LOW (0V) voltage level
-          digitalWrite(LED1, LOW);
-          // change state of LED2 by setting the pin to the HIGH (5V) voltage level
-          digitalWrite(LED2, HIGH);
-          // change state of LED3 by setting the pin to the LOW (0V) voltage level
-          digitalWrite(LED3, LOW); 
-          // wait for a second (LED2 is bright for 1s)
-          delay(1000);   digitalWrite(LED1, LOW) ;
-          // change state of LED1 by setting the pin to the LOW (0V) voltage level
-          digitalWrite(LED1, LOW);
-          // change state of LED2 by setting the pin to the LOW (0V) voltage level
-          digitalWrite(LED2, LOW);
-          // change state of LED1 by setting the pin to the HIGH (5V) voltage level
-          digitalWrite(LED3, HIGH); 
-          // wait for a second (LED3 is bright for 1s)
-          delay(1000); 
+          // check if the button is pressed (HIGH = pressed)
+          if (digitalRead(BUTTON) == HIGH) {
+            // LED1 on while LED2 fades up
+            digitalWrite(LED1, HIGH);
+            // LED3 off during fade up
+            digitalWrite(LED3, LOW);
+            // step brightness from 0 to 255 in increments of 5
+            for (int b = 0; b <= 255; b += 5) {
+              // set LED2 brightness to b using PWM
+              analogWrite(LED2, b);
+              // wait 10 ms so the fade is visible
+              delay(10);
+            }
+            // LED1 off while LED2 fades down
+            digitalWrite(LED1, LOW);
+            // LED3 on during fade down
+            digitalWrite(LED3, HIGH);
+            // step brightness from 255 back to 0
+            for (int b = 255; b >= 0; b -= 5) {
+              // set LED2 brightness to b using PWM
+              analogWrite(LED2, b);
+              // wait 10 ms so fade is visible
+              delay(10);
+            }
+          } else {
+            // button not pressed: turn LED1 off
+            digitalWrite(LED1, LOW);
+            // turn LED2 off
+            analogWrite(LED2, 0);
+            // turn LED3 off
+            digitalWrite(LED3, LOW);
+          }
         }
       </code></pre>
     </section>
