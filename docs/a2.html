@@ -7,6 +7,9 @@
     <title>Ariana's HCDE 439 Physical Computing Page!</title>
 
     <link href="style.css" rel="stylesheet" type="text/css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.4.0/styles/atom-one-dark.min.css">
+    <script src=”https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.4.0/highlight.min.js”></script>
+    <script>hljs.highlightAll();</script>
   </head>
   <body>
     <h1>Ariana's Assignment 2: Fade!</h1>
@@ -15,8 +18,9 @@
     </div>
 
     <section>
+      <h2>Brief</h2>
       <p>
-        Brief: You work for a toy company, and the chief 
+        You work for a toy company, and the chief 
         innovation officer wants you to make a prototype for a new light-up toy.
       </p>
     </section>
@@ -64,7 +68,7 @@
         Circuit
       </h2>
       <figure>
-        <img src="assets/three-leds-breadboard.jpg" height="400px" alt="breadboard with three leds, one lit up">
+        <img src="assets/a2/circuit-breadboard.HEIC" height="400px" alt="breadboard with three leds, one lit up">
         <figcaption>My breadboard circuit. LED1 is pin 12. LED2 is pin 10. LED3 is pin 8.</figcaption>
       </figure>
     </section>
@@ -76,8 +80,8 @@
         Circuit Operation
       </h2>
       <figure>
-        <img src="assets/a2/circuit-operation-gif.gif" alt="GIF of three LEDs blinking, one after the other" style="max-height: 800px;"> 
-        <figcaption>The LEDs light up, one after the other, in a loop.</figcaption>    
+        <img src="assets/a2/circuit-operation.gif" alt="GIF of three LEDs blinking, one after the other" style="max-height: 800px;"> 
+        <figcaption>The red LED fades on and off. When pressing the button, the three LEDs light up, one after the other, in a loop.</figcaption>    
       </figure>
     </section>
     <br>
@@ -85,62 +89,84 @@
     <!-- Code Snippet -->
     <section>
       <h2>Code Snippet</h2>
-      <pre><code>
-        // pin for LED1 (on/off)
-        int LED1 = 12;
-        // pin for LED2 (PWM pin, for fade)
-        int LED2 = 10;
-        // pin for LED3 (on/off)
-        int LED3 = 8;
-        // pin for button
-        int BUTTON = 2;
+      <pre><code class="language-javascript">
+        // pin that button is connected to
+        const int buttonPin = 2;
+        // pin for red LED (PWM, used for fading)
+        const int ledRed = 11;
+        // pin for green LED (digital)
+        const int ledGreen = 12;
+        // pin for blue LED (digital)
+        const int ledBlue = 13;
 
-        // runs once at power on or reset
+        // how bright the fading LED is (0-255)
+        int brightness = 0;
+        // how much to fade the brightness by, each step
+        int fadeAmount = 5;
+
+        // setup runs once when the Arduino powers on or resets
         void setup() {
-          // LED1 pin is an output
-          pinMode(LED1, OUTPUT);
-          // LED2 pin is an output
-          pinMode(LED2, OUTPUT);
-          // LED3 pin is an output
-          pinMode(LED3, OUTPUT);
-          // button pin is an input
-          pinMode(BUTTON, INPUT);
+          // set the button pin as an input to read it!
+          pinMode(buttonPin, INPUT);
+          // declare pin 11 (red LED) to be an output
+          pinMode(ledRed, OUTPUT);
+          // declare pin 12 (green LED) to be an output
+          pinMode(ledGreen, OUTPUT);
+          // declare pin 13 (blue LED) to be an output
+          pinMode(ledBlue, OUTPUT);
         }
 
-        // the loop routine runs over and over again forever:
+        // loop runs over and over forever
         void loop() {
-          // check if the button is pressed (HIGH = pressed)
-          if (digitalRead(BUTTON) == HIGH) {
-            // LED1 on while LED2 fades up
-            digitalWrite(LED1, HIGH);
-            // LED3 off during fade up
-            digitalWrite(LED3, LOW);
-            // step brightness from 0 to 255 in increments of 5
-            for (int b = 0; b <= 255; b += 5) {
-              // set LED2 brightness to b using PWM
-              analogWrite(LED2, b);
-              // wait 10 ms so the fade is visible
-              delay(10);
+          // read button: HIGH when pressed, LOW when released
+          int buttonState = digitalRead(buttonPin);
+
+          // list of LED pins for for loop to run through
+          int ledPins[3] = {ledRed, ledGreen, ledBlue};
+
+          // check if button is being pressed
+          if (buttonState == HIGH) {
+            // for loop
+            for (int i = 0; i < 3; i++) {
+              // turn current LED on
+              digitalWrite(ledPins[i], HIGH);
+              // delay to keep light on visibly
+              delay(100);
+              // turn current LED back off
+              digitalWrite(ledPins[i], LOW);
             }
-            // LED1 off while LED2 fades down
-            digitalWrite(LED1, LOW);
-            // LED3 on during fade down
-            digitalWrite(LED3, HIGH);
-            // step brightness from 255 back to 0
-            for (int b = 255; b >= 0; b -= 5) {
-              // set LED2 brightness to b using PWM
-              analogWrite(LED2, b);
-              // wait 10 ms so fade is visible
-              delay(10);
+
+            // for loops runs backwards
+            for (int i = 2; i >= 0; i--) {
+              // turn current LED on
+              digitalWrite(ledPins[i], HIGH);
+              // delay to keep light on visibly
+              delay(100);
+              // turn current LED back off
+              digitalWrite(ledPins[i], LOW);
             }
-          } else {
-            // button not pressed: turn LED1 off
-            digitalWrite(LED1, LOW);
-            // turn LED2 off
-            analogWrite(LED2, 0);
-            // turn LED3 off
-            digitalWrite(LED3, LOW);
           }
+
+          // do the fade
+          else {
+            // make sure green LED is off
+            digitalWrite(ledGreen, LOW);
+            // make sure blue LED is off
+            digitalWrite(ledBlue, LOW);
+
+            // set red LED to current brightness
+            analogWrite(ledRed, brightness);
+            // update brightness for next time
+            brightness += fadeAmount;
+            // reverse fade direction at ends of fade:
+            if (brightness <= 0 || brightness >= 255) {
+              // reverse fade direction
+              fadeAmount = -fadeAmount;
+            }
+            
+            // make fade visible + smooth
+            delay(30);
+          } 
         }
       </code></pre>
     </section>
@@ -158,10 +184,11 @@
         analogWrite(led, 255).
       </h3>
       <figure>
-        <img src="assets/voltage-v-time-graph.png">
+        <img src="assets/a2/voltage-over-time-analog-graph.png">
         <figcaption>
-          This is the voltage over time for my 3 LEDs. The red line is LED1, green is LED2, and blue is LED3.
-          I graphed up until 6 seconds (or 6000 milliseconds).
+          This is the voltage over time representing the voltage across an LED with three different analog values. 
+          analogWrite(led, 64) translates to ~1.25 V. analogWrite(led, 64) translates to ~2.51 V. 
+          analogWrite(led, 255) translates to 5 V. 
         </figcaption>
       </figure>
       <br>
