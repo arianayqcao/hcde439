@@ -26,11 +26,13 @@
         Schematic
       </h2>
       <figure>
-        <img src="assets/schematic.JPG" height="400px" alt="calculations and schematic on whiteboard">
+        <img src="assets/a2/a2-fade-schematic-drawing.PNG" height="400px" alt="calculations and schematic">
         <figcaption>
-          Schematic of my circuit. Each LED has its own 100 ohm resistor. 
+          Schematic of my circuit. The red LED has a 100 ohm resistor,
+          and the green and blue LEDs have a 220 ohm resistor.
           The 3 branches are in parallel. Each LED connects to a pin 
-          (LED1 to pin 12, LED2 to pin 10, LED3 to pin 8), and to ground.
+          (LED1 to pin 13, LED2 to pin 12, LED3 to pin 11), and to ground.
+          The button also connects to ground and pin 8.
         </figcaption>
       </figure>
     </section>
@@ -148,6 +150,7 @@
     <section>
       <h2>Questions</h2>
 
+      <!-- Question 1: Chart -->
       <h3>
         1: Draw a chart where the X axis is time and the Y axis is 
         voltage. Draw 3 lines representing the voltage across an LED 
@@ -163,6 +166,7 @@
       </figure>
       <br>
 
+      <!-- Question 2 -->
       <h3>
         2: If all your LEDs were on simultaneously, what would the 
         total current draw be? Is this above or below the total Arduino 
@@ -176,28 +180,25 @@
       </p>
       <br>
 
+      <!-- Question 3 -->
       <h3>
         3: Measure and record the actual voltage across one of your LEDs 
         when it's on. How does this compare to the theoretical forward 
         voltage for your LED color?
       </h3>
       <p>
-        I need to blink my LEDs about 15-20ms before I can no longer tell.
-        Around 20ms is when it stops looking like blinking, and more like a slight flicker. 
-        Around 10ms is when it really completely looks constant.
+        
       </p>
       <br>
 
+      <!-- Question 4 -->
       <h3>
         4: Did you use AI tools in completing this assignment?
       </h3>
       <p>I did use AI tools. I used Claude to refresh my memory on how to write HTML. 
         It gave me more information than I needed, so I just used it for formatting. 
         Everything else is my own thinking. 
-        Chat: https://claude.ai/share/7d2aa6ca-e254-4104-92de-5ebaa89c192e
-        It was helpful for verifying that my calculations were correct. I was confused 
-        on whether I needed to use 20mA or 10mA in my calculations for resistance, and 
-        I was able to realize that was only if all LEDs were on at once.
+        It was helpful for verifying that my calculations were correct.
       </p>
     </section>
   </body>
