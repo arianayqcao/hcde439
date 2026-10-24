@@ -30,7 +30,7 @@
         Schematic
       </h2>
       <figure>
-        <img src="assets/a2/a2-fade-schematic-drawing.PNG" height="400px" alt="calculations and schematic">
+        <img src="assets/a2/schematic-diagram.png" height="400px" alt="calculations and schematic">
         <figcaption>
           Schematic of my circuit. All three of my LEDs have an 100 ohm resistor.
           The 3 branches are in parallel. Each LED connects to a pin 
@@ -56,7 +56,11 @@
           my blue LED (3.3 V), I = 95 ohms.
           Neither 150 or 85 ohms are available in our kit, so I picked the closest options that didn't exceed 
           40 mA, which was 100 ohms.
-          The total current with this setup would be around 77 mA, which is safely under the 150 mA total limit.
+          The total current with this setup would be around 77 mA, which is safely under the 150 mA total limit. 
+          I also used a 10k resistor for the button because when the button isn't pressed, it's "floating." 
+          It's so high so that the pin doesn't float and give random readings. 
+          Because the button is also connected to 5V directly when pressed, it can overpower the 10k ohm resistor. 
+          
         </figcaption>
       </figure>
       <p></p>
@@ -70,7 +74,7 @@
       </h2>
       <figure>
         <img src="assets/a2/circuit-breadboard.jpg" height="400px" alt="breadboard with three leds, one lit up">
-        <figcaption>My breadboard circuit. LED1 is pin 12. LED2 is pin 10. LED3 is pin 8.</figcaption>
+        <figcaption>My breadboard circuit. ledRed is pin 11 to support PWM for the fade. ledGreen is pin 12 and ledBlue is pin 13, which are regular pins for digitalWrite.</figcaption>
       </figure>
     </section>
     <br>
@@ -207,12 +211,12 @@
         My actual circuit is different because each LED has its own resistor. 
       </p>
       <p>
-        Using a 5 V supply, Red (2.0 V, 100 Ω): (5 - 2.0) / 100 = 30 mA. Green (2.0 V, 220 Ω): (5 - 2.0) / 220 ≈ 13.6 mA. Blue (3.3 V, 220 Ω): (5 - 3.3) / 220 ≈ 7.7 mA
+        Using a 5 V supply, Red & Green (2.0 V, 100 Ω): (5 - 2.0) / 100 = 30 mA. Blue (3.3 V, 100 Ω): (5 - 3.3) / 100 ≈ 17 mA
       </p>
       <p>
-        The total current is about 51.3 mA. This is below the total Arduino current draw limits, which is 150 mA total.
-        If all my LEDs were on, my circuit would likely run for 23.4 hours. Since 1200 mAh is 
-        1200 mA per hour, 1200 mA / 51.3 mA would be ~23.4 hours.
+        The total current is about 77 mA. This is below the total Arduino current draw limits, which is 150 mA total.
+        If all my LEDs were on, my circuit would likely run for 15.6 hours. Since 1200 mAh is 
+        1200 mA per hour, 1200 mA / 51.3 mA would be ~15.6 hours. I could make it run longer if I had higher resistors.
       </p>
       <br>
 
