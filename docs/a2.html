@@ -32,11 +32,10 @@
       <figure>
         <img src="assets/a2/a2-fade-schematic-drawing.PNG" height="400px" alt="calculations and schematic">
         <figcaption>
-          Schematic of my circuit. The red LED has a 100 ohm resistor,
-          and the green and blue LEDs have a 220 ohm resistor.
+          Schematic of my circuit. All three of my LEDs have an 100 ohm resistor.
           The 3 branches are in parallel. Each LED connects to a pin 
           (LED1 to pin 13, LED2 to pin 12, LED3 to pin 11), and to ground.
-          The button also connects to ground and pin 8.
+          The button also connects to ground, pin 2, and 5 V.
         </figcaption>
       </figure>
     </section>
@@ -48,14 +47,16 @@
         Resistor Calculation
       </h2>
       <figure>
-        <img src="assets/resistance-calculations.JPG" height="400px" alt="paper with calculations for resistor ohms">
+        <img src="assets/a2/resistor-calculations.png" height="400px" alt="paper with calculations for resistor ohms">
         <figcaption>
-          Peak voltage is 5V. Each red LED is 2V. We're recmmend 20 mA through each one.
-          Because the lights aren't all on at the same time, I figured 20mA wouldn't burn
-          out the Arduino. 
-          I used 100 ohm resistor (since there's no 150 ohm). 
-          I used KCL, KVL, and Ohm's Law in combination to calculate! 
-          Also, I accidentally wrote R2 for R1's Voltage. It should be VR1 (but I can't find the original file!).
+          Peak voltage is 5V. To find the resistor voltage (I forgot to do this last time), 
+          I subtract the LED voltage from the supply voltage (5 V). 
+          These are my resistor calculations with a 5 V pin and assuming 20 mA for current per pin. 
+          For my red and green LEDs (2.0 V), I = V/R = 150 ohms. For 
+          my blue LED (3.3 V), I = 95 ohms.
+          Neither 150 or 85 ohms are available in our kit, so I picked the closest options that didn't exceed 
+          40 mA, which was 100 ohms.
+          The total current with this setup would be around 77 mA, which is safely under the 150 mA total limit.
         </figcaption>
       </figure>
       <p></p>
@@ -187,8 +188,8 @@
         <img src="assets/a2/voltage-over-time-analog-graph.png">
         <figcaption>
           This is the voltage over time representing the voltage across an LED with three different analog values. 
-          analogWrite(led, 64) translates to ~1.25 V. analogWrite(led, 64) translates to ~2.51 V. 
-          analogWrite(led, 255) translates to 5 V. 
+          analogWrite(led, 64) maps to ~1.25 V. analogWrite(led, 64) maps to ~2.51 V. 
+          analogWrite(led, 255) maps to 5 V. 
         </figcaption>
       </figure>
       <br>
@@ -201,9 +202,17 @@
         your circuit run if powered by a 1200 mAh battery?
       </h3>
       <p>
-        I could technically try to blink 13 LEDs, one for each pin in the Arduino. 
-        But that would probably draw ~260 mA of current, which exceeds the maximum total current, which would burn out the Arduino.
-        So I can actually only blink 9 LEDs safely, which would draw ~180 mA.
+        If all my LEDs were on simultaneously, and if I used the recommended 20 mA per LED,
+         it would draw about 60mA of total current, since I have 3 LEDs. 
+        My actual circuit is different because each LED has its own resistor. 
+      </p>
+      <p>
+        Using a 5 V supply, Red (2.0 V, 100 Ω): (5 - 2.0) / 100 = 30 mA. Green (2.0 V, 220 Ω): (5 - 2.0) / 220 ≈ 13.6 mA. Blue (3.3 V, 220 Ω): (5 - 3.3) / 220 ≈ 7.7 mA
+      </p>
+      <p>
+        The total current is about 51.3 mA. This is below the total Arduino current draw limits, which is 150 mA total.
+        If all my LEDs were on, my circuit would likely run for 23.4 hours. Since 1200 mAh is 
+        1200 mA per hour, 1200 mA / 51.3 mA would be ~23.4 hours.
       </p>
       <br>
 
@@ -214,7 +223,11 @@
         voltage for your LED color?
       </h3>
       <p>
-        
+        I believe it was the same as my theoretical forward voltage. 
+        I measured the actual voltage and it seemed to be 2.00 exactly! 
+        I measured by slowing down my fade to delay(200) instead of delay(30), and seeing the voltage 
+        slowly climb from 0 to 2.0 V. 
+        Honestly, I'm not sure if I measured this right, but this is what I measured! 
       </p>
       <br>
 
@@ -222,10 +235,9 @@
       <h3>
         4: Did you use AI tools in completing this assignment?
       </h3>
-      <p>I did use AI tools. I used Claude to refresh my memory on how to write HTML. 
-        It gave me more information than I needed, so I just used it for formatting. 
-        Everything else is my own thinking. 
-        It was helpful for verifying that my calculations were correct.
+      <p>I did use AI tools. I used Claude to verify that my calculations were correct.
+        I also wasn't sure how to use a forward loop for this problem, so I had it give me hints. 
+        The hint it gave me was to create a list of the LEDs for the for loop to loop through!
       </p>
     </section>
   </body>
