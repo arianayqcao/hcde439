@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, maximum-scale=1.0" />
+
+    <title>Ariana's HCDE 439 Physical Computing Page!</title>
+
+    <link href="style.css" rel="stylesheet" type="text/css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.4.0/styles/atom-one-dark.min.css">
+    <script src=”https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.4.0/highlight.min.js”></script>
+    <script>hljs.highlightAll();</script>
+  </head>
+  <body>
+    <h1>Ariana's Assignment 3: Input Output!</h1>
+    <div class="header">
+      <p>Here is all the documentation for assignment 3!</p>
+    </div>
+
+    <section>
+      <h2>Brief</h2>
+      <p>
+        You work at a smart home company and the CIO wants you to 
+        prototype a new visualization for a product that senses 
+        something around the home. 
+      </p>
+    </section>
+    <!-- Schematic -->
+    <section>
+      <h2>
+        Schematic
+      </h2>
+      <figure>
+        <img src="assets/a3/schematic-diagram.png" height="400px" alt="calculations and schematic">
+        <figcaption>
+          <!-- ACTION NEEDED: Write a caption. -->
+        </figcaption>
+      </figure>
+    </section>
+    <br>
+
+    <!-- Resistance Calculation -->
+    <section>
+      <h2>
+        Resistor Calculation
+      </h2>
+      <figure>
+        <img src="assets/a2/resistor-calculations.png" height="400px" alt="paper with calculations for resistor ohms">
+        <figcaption>
+          <!-- TO-DO: Write a caption. -->
+        </figcaption>
+      </figure>
+      <p></p>
+    </section>
+    <br>
+
+    <!-- Circuit -->
+    <section>
+      <h2>
+        Circuit
+      </h2>
+      <figure>
+        <img src="assets/a2/circuit-breadboard.jpg" height="400px" alt="breadboard with three leds, one lit up">
+        <figcaption>
+          <!-- TO-DO: Write a caption. -->
+        </figcaption>
+      </figure>
+    </section>
+    <br>
+
+    <!-- Circuit Operation -->
+    <section>
+      <h2>
+        Circuit Operation
+      </h2>
+      <figure>
+        <img src="assets/a2/circuit-operation.gif" alt="GIF of three LEDs blinking, one after the other" style="max-height: 800px;"> 
+        <figcaption>The red LED fades on and off. When pressing the button, the three LEDs light up, one after the other, in a loop.</figcaption>    
+      </figure>
+    </section>
+    <br>
+
+    <!-- Code Snippet -->
+    <section>
+      <h2>Code Snippet</h2>
+      <pre><code class="language-javascript">
+        // pin that button is connected to
+        const int buttonPin = 2;
+        // pin for red LED (PWM, used for fading)
+        const int ledRed = 11;
+        // pin for green LED (digital)
+        const int ledGreen = 12;
+        // pin for blue LED (digital)
+        const int ledBlue = 13;
+
+        // how bright the fading LED is (0-255)
+        int brightness = 0;
+        // how much to fade the brightness by, each step
+        int fadeAmount = 5;
+
+        // setup runs once when the Arduino powers on or resets
+        void setup() {
+          // set the button pin as an input to read it!
+          pinMode(buttonPin, INPUT);
+          // declare pin 11 (red LED) to be an output
+          pinMode(ledRed, OUTPUT);
+          // declare pin 12 (green LED) to be an output
+          pinMode(ledGreen, OUTPUT);
+          // declare pin 13 (blue LED) to be an output
+          pinMode(ledBlue, OUTPUT);
+        }
+
+        // loop runs over and over forever
+        void loop() {
+          // read button: HIGH when pressed, LOW when released
+          int buttonState = digitalRead(buttonPin);
+
+          // list of LED pins for for loop to run through
+          int ledPins[3] = {ledRed, ledGreen, ledBlue};
+
+          // check if button is being pressed
+          if (buttonState == HIGH) {
+            // for loop
+            for (int i = 0; i < 3; i++) {
+              // turn current LED on
+              digitalWrite(ledPins[i], HIGH);
+              // delay to keep light on visibly
+              delay(100);
+              // turn current LED back off
+              digitalWrite(ledPins[i], LOW);
+            }
+
+            // for loops runs backwards
+            for (int i = 2; i >= 0; i--) {
+              // turn current LED on
+              digitalWrite(ledPins[i], HIGH);
+              // delay to keep light on visibly
+              delay(100);
+              // turn current LED back off
+              digitalWrite(ledPins[i], LOW);
+            }
+          }
+
+          // do the fade
+          else {
+            // make sure green LED is off
+            digitalWrite(ledGreen, LOW);
+            // make sure blue LED is off
+            digitalWrite(ledBlue, LOW);
+
+            // set red LED to current brightness
+            analogWrite(ledRed, brightness);
+            // update brightness for next time
+            brightness += fadeAmount;
+            // reverse fade direction at ends of fade:
+            if (brightness <= 0 || brightness >= 255) {
+              // reverse fade direction
+              fadeAmount = -fadeAmount;
+            }
+            
+            // make fade visible + smooth
+            delay(30);
+          } 
+        }
+      </code></pre>
+    </section>
+    <br>
+
+    <!-- Additional Questions -->
+    <section>
+      <h2>Questions</h2>
+
+      <!-- Question 1: Chart -->
+      <h3>
+        1: Draw a chart where the X axis is time and the Y axis is 
+        voltage. Draw 3 lines representing the voltage across an LED 
+        with analogWrite(led, 64), analogWrite(led, 128), and 
+        analogWrite(led, 255).
+      </h3>
+      <figure>
+        <img src="assets/a2/voltage-over-time-analog-graph.png">
+        <figcaption>
+          This is the voltage over time representing the voltage across an LED with three different analog values. 
+          analogWrite(led, 64) maps to ~1.25 V. analogWrite(led, 64) maps to ~2.51 V. 
+          analogWrite(led, 255) maps to 5 V. 
+        </figcaption>
+      </figure>
+      <br>
+
+      <!-- Question 2 -->
+      <h3>
+        2: If all your LEDs were on simultaneously, what would the 
+        total current draw be? Is this above or below the total Arduino 
+        current draw limits? If all your LEDs were on, how long would 
+        your circuit run if powered by a 1200 mAh battery?
+      </h3>
+      <p>
+        If all my LEDs were on simultaneously, and if I used the recommended 20 mA per LED,
+         it would draw about 60mA of total current, since I have 3 LEDs. 
+        My actual circuit is different because each LED has its own resistor. 
+      </p>
+      <p>
+        Using a 5 V supply, Red & Green (2.0 V, 100 Ω): (5 - 2.0) / 100 = 30 mA. Blue (3.3 V, 100 Ω): (5 - 3.3) / 100 ≈ 17 mA
+      </p>
+      <p>
+        The total current is about 77 mA. This is below the total Arduino current draw limits, which is 150 mA total.
+        If all my LEDs were on, my circuit would likely run for 15.6 hours. Since 1200 mAh is 
+        1200 mA per hour, 1200 mA / 51.3 mA would be ~15.6 hours. I could make it run longer if I had higher resistors.
+      </p>
+      <br>
+
+      <!-- Question 3 -->
+      <h3>
+        3: Measure and record the actual voltage across one of your LEDs 
+        when it's on. How does this compare to the theoretical forward 
+        voltage for your LED color?
+      </h3>
+      <p>
+        I believe it was the same as my theoretical forward voltage. 
+        I measured the actual voltage and it seemed to be 2.00 exactly! 
+        I measured by slowing down my fade to delay(200) instead of delay(30), and seeing the voltage 
+        slowly climb from 0 to 2.0 V. 
+        Honestly, I'm not sure if I measured this right, but this is what I measured! 
+      </p>
+      <br>
+
+      <!-- Question 4 -->
+      <h3>
+        4: Did you use AI tools in completing this assignment?
+      </h3>
+      <p>I did use AI tools. I used Claude to verify that my calculations were correct.
+        I also wasn't sure how to use a forward loop for this problem, so I had it give me hints. 
+        The hint it gave me was to create a list of the LEDs for the for loop to loop through!
+      </p>
+    </section>
+  </body>
+</html>
