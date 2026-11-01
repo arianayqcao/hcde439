@@ -25,32 +25,19 @@
         something around the home. 
       </p>
     </section>
+    <br>
+
     <!-- Schematic -->
     <section>
       <h2>
         Schematic
       </h2>
       <figure>
-        <img src="assets/a3/schematic-diagram.png" height="400px" alt="calculations and schematic">
+        <img src="assets/a3/schematic.png" height="400px" alt="calculations and schematic">
         <figcaption>
           <!-- ACTION NEEDED: Write a caption. -->
         </figcaption>
       </figure>
-    </section>
-    <br>
-
-    <!-- Resistance Calculation -->
-    <section>
-      <h2>
-        Resistor Calculation
-      </h2>
-      <figure>
-        <img src="assets/a2/resistor-calculations.png" height="400px" alt="paper with calculations for resistor ohms">
-        <figcaption>
-          <!-- TO-DO: Write a caption. -->
-        </figcaption>
-      </figure>
-      <p></p>
     </section>
     <br>
 
@@ -74,8 +61,16 @@
         Circuit Operation
       </h2>
       <figure>
-        <img src="assets/a3/circuit-operation.gif" alt="GIF of three LEDs blinking, one after the other" style="max-height: 800px;"> 
-        <figcaption>The red LED fades on and off. When pressing the button, the three LEDs light up, one after the other, in a loop.</figcaption>    
+        <img src="assets/a3/dim-light-operation.gif" alt="GIF of three LEDs blinking, one after the other" style="max-height: 800px;"> 
+        <figcaption>
+          The red LED fades on and off. When pressing the button, the three LEDs light up, one after the other, in a loop.
+        </figcaption>    
+      </figure>
+      <figure>
+        <img src="assets/a3/bright-light-operation.gif" alt="GIF of three LEDs blinking, one after the other" style="max-height: 800px;"> 
+        <figcaption>
+          The red LED fades on and off. When pressing the button, the three LEDs light up, one after the other, in a loop.
+        </figcaption>    
       </figure>
     </section>
     <br>
@@ -164,68 +159,54 @@
     <section>
       <h2>Questions</h2>
 
+
+
+
       <!-- Question 1: Chart -->
       <h3>
-        1: Draw a chart where the X axis is time and the Y axis is 
-        voltage. Draw 3 lines representing the voltage across an LED 
-        with analogWrite(led, 64), analogWrite(led, 128), and 
-        analogWrite(led, 255).
+        1: In your voltage divider, can the variable resistor be either 
+        R1 or R2 or does it need to be one or the other? Justify your 
+        answer with example calculations.
       </h3>
-      <figure>
-        <img src="assets/a2/voltage-over-time-analog-graph.png">
-        <figcaption>
-          This is the voltage over time representing the voltage across an LED with three different analog values. 
-          analogWrite(led, 64) maps to ~1.25 V. analogWrite(led, 64) maps to ~2.51 V. 
-          analogWrite(led, 255) maps to 5 V. 
-        </figcaption>
-      </figure>
+      <p>
+        I think it can be either one. Since the direction of the voltage 
+        changes but the drop in voltage stays the same.
+
+
+      </p>
       <br>
 
       <!-- Question 2 -->
       <h3>
-        2: If all your LEDs were on simultaneously, what would the 
-        total current draw be? Is this above or below the total Arduino 
-        current draw limits? If all your LEDs were on, how long would 
-        your circuit run if powered by a 1200 mAh battery?
+        2: Draw a graph where the x-axis is time and the y-axis is 
+        voltage. Plot the voltage at V-measure (where your pin is 
+        reading the voltage) of your voltage divider of your shared 
+        gif/video.
       </h3>
-      <p>
-        If all my LEDs were on simultaneously, and if I used the recommended 20 mA per LED,
-         it would draw about 60mA of total current, since I have 3 LEDs. 
-        My actual circuit is different because each LED has its own resistor. 
-      </p>
-      <p>
-        Using a 5 V supply, Red & Green (2.0 V, 100 Ω): (5 - 2.0) / 100 = 30 mA. Blue (3.3 V, 100 Ω): (5 - 3.3) / 100 ≈ 17 mA
-      </p>
-      <p>
-        The total current is about 77 mA. This is below the total Arduino current draw limits, which is 150 mA total.
-        If all my LEDs were on, my circuit would likely run for 15.6 hours. Since 1200 mAh is 
-        1200 mA per hour, 1200 mA / 51.3 mA would be ~15.6 hours. I could make it run longer if I had higher resistors.
-      </p>
+      <figure>
+        <img>
+        <figcaption></figcaption>
+      </figure>
       <br>
 
       <!-- Question 3 -->
       <h3>
-        3: Measure and record the actual voltage across one of your LEDs 
-        when it's on. How does this compare to the theoretical forward 
-        voltage for your LED color?
+        3: AnalogWrite and analogRead are respectively 8-bit and 10-bit 
+        values. Imagine you had 10-bit PWM and a 16-bit analog-to-digital 
+        converter instead. How would this change your map() code? 
+        Explain your answer.
       </h3>
       <p>
-        I believe it was the same as my theoretical forward voltage. 
-        I measured the actual voltage and it seemed to be 2.00 exactly! 
-        I measured by slowing down my fade to delay(200) instead of delay(30), and seeing the voltage 
-        slowly climb from 0 to 2.0 V. 
-        Honestly, I'm not sure if I measured this right, but this is what I measured! 
+        Right now, my map() code is
+
+          int brightness = map(sensorValue, sensorMin, sensorMax, 255, 0);
+
+        With a 16-bit ADC and 10-bit PWM, it would probably become:
+
+        map(sensorValue, sensorMin, sensorMax, 1023, 0);
       </p>
       <br>
 
-      <!-- Question 4 -->
-      <h3>
-        4: Did you use AI tools in completing this assignment?
-      </h3>
-      <p>I did use AI tools. I used Claude to verify that my calculations were correct.
-        I also wasn't sure how to use a forward loop for this problem, so I had it give me hints. 
-        The hint it gave me was to create a list of the LEDs for the for loop to loop through!
-      </p>
     </section>
   </body>
 </html>
