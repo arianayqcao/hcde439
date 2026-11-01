@@ -60,7 +60,7 @@
         Circuit
       </h2>
       <figure>
-        <img src="assets/a2/circuit-breadboard.jpg" height="400px" alt="breadboard with three leds, one lit up">
+        <img src="assets/a3/circuit.jpg" height="400px" alt="breadboard with three leds, one lit up">
         <figcaption>
           <!-- TO-DO: Write a caption. -->
         </figcaption>
@@ -74,7 +74,7 @@
         Circuit Operation
       </h2>
       <figure>
-        <img src="assets/a2/circuit-operation.gif" alt="GIF of three LEDs blinking, one after the other" style="max-height: 800px;"> 
+        <img src="assets/a3/circuit-operation.gif" alt="GIF of three LEDs blinking, one after the other" style="max-height: 800px;"> 
         <figcaption>The red LED fades on and off. When pressing the button, the three LEDs light up, one after the other, in a loop.</figcaption>    
       </figure>
     </section>
@@ -83,84 +83,78 @@
     <!-- Code Snippet -->
     <section>
       <h2>Code Snippet</h2>
-      <pre><code class="language-javascript">
-        // pin that button is connected to
-        const int buttonPin = 2;
-        // pin for red LED (PWM, used for fading)
-        const int ledRed = 11;
-        // pin for green LED (digital)
-        const int ledGreen = 12;
-        // pin for blue LED (digital)
-        const int ledBlue = 13;
+      <pre><code>
+        // include Servo library to control the servor motor
+        #include <Servo.h>
 
-        // how bright the fading LED is (0-255)
-        int brightness = 0;
-        // how much to fade the brightness by, each step
-        int fadeAmount = 5;
+        // create a servo object to control the servo motor
+        Servo Servo1;
 
-        // setup runs once when the Arduino powers on or resets
+        // pin where voltage divider output (V-measure) is read
+        const int sensorPin = A0;
+        // pin connected to servo
+        const int servoPin = 9;
+        // PWM pin connected to LED
+        const int ledPin = 6;
+
+        // Lowest analogRead value I expect (dark room, ~0.45V)
+        const int sensorMin = 150;
+        // Highest analogRead value I expect (bright room, ~4.55V)
+        const int sensorMax = 920;
+        const int darkThreshold = 400;
+
+        // setup code runs once at the start
         void setup() {
-          // set the button pin as an input to read it!
-          pinMode(buttonPin, INPUT);
-          // declare pin 11 (red LED) to be an output
-          pinMode(ledRed, OUTPUT);
-          // declare pin 12 (green LED) to be an output
-          pinMode(ledGreen, OUTPUT);
-          // declare pin 13 (blue LED) to be an output
-          pinMode(ledBlue, OUTPUT);
+          // start serial communication at 9600 baud
+          Serial.begin(9600);
+          // set LED pin as output
+          pinMode(ledPin, OUTPUT);
+          // attach servo object to servo pin
+          Servo1.attach(servoPin);
         }
 
-        // loop runs over and over forever
+        // main code runs repeatedly
         void loop() {
-          // read button: HIGH when pressed, LOW when released
-          int buttonState = digitalRead(buttonPin);
+          // read voltage at divider
+          int sensorValue = analogRead(sensorPin);
+          // keep reading inside my calibrated range so map() doesn't overshoot
+          sensorValue = constrain(sensorValue, sensorMin, sensorMax);
+          // scale the reading to a servo angle: dark = 0 degrees, bright = 180 degrees
+          int angle = map(sensorValue, sensorMin, sensorMax, 0, 180);
 
-          // list of LED pins for for loop to run through
-          int ledPins[3] = {ledRed, ledGreen, ledBlue};
+          int brightness = map(sensorValue, sensorMin, sensorMax, 255, 0);
 
-          // check if button is being pressed
-          if (buttonState == HIGH) {
-            // for loop
-            for (int i = 0; i < 3; i++) {
-              // turn current LED on
-              digitalWrite(ledPins[i], HIGH);
-              // delay to keep light on visibly
-              delay(100);
-              // turn current LED back off
-              digitalWrite(ledPins[i], LOW);
-            }
+          // move servo needle to the angle
+          Servo1.write(angle);
 
-            // for loops runs backwards
-            for (int i = 2; i >= 0; i--) {
-              // turn current LED on
-              digitalWrite(ledPins[i], HIGH);
-              // delay to keep light on visibly
-              delay(100);
-              // turn current LED back off
-              digitalWrite(ledPins[i], LOW);
-            }
+          // set LED brightness using PWM
+          analogWrite(ledPin, brightness);
+
+          // check if room is dark enough to count as nighttime
+          if (sensorValue < darkThreshold) {
+            // report room is dark so lamp is glowing
+            Serial.print("room is dark, lamp on | ");
+          } else {
+            // report room is bright so lamp is fading
+            Serial.print("room is bright, lamp fading | ");
           }
 
-          // do the fade
-          else {
-            // make sure green LED is off
-            digitalWrite(ledGreen, LOW);
-            // make sure blue LED is off
-            digitalWrite(ledBlue, LOW);
+          // label the raw sensor reading
+          Serial.print("sensor: ");
+          // print the raw sensor reading
+          Serial.print(sensorValue);
+          // label the servo angle
+          Serial.print(" | needle: ");
+          // print the servo angle
+          Serial.print(angle);
+          // label the LED brightness
+          Serial.print(" deg | LED: ");
+          // print the PWM value and end the line
+          Serial.println(brightness);
 
-            // set red LED to current brightness
-            analogWrite(ledRed, brightness);
-            // update brightness for next time
-            brightness += fadeAmount;
-            // reverse fade direction at ends of fade:
-            if (brightness <= 0 || brightness >= 255) {
-              // reverse fade direction
-              fadeAmount = -fadeAmount;
-            }
-            
-            // make fade visible + smooth
-            delay(30);
-          } 
+          // wait 200 ms so the servo can move
+          delay(200);
+
         }
       </code></pre>
     </section>
