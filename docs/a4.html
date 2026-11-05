@@ -75,7 +75,12 @@
     <!-- Code Snippet -->
     <section>
       <h2>Code Snippet</h2>
-      <pre><code>
+      <pre><code class="language-cpp">
+        // include Servo library to control the servor motor
+        #include &lt;Servo.h&gt;>
+
+        // create a servo object to control the servo motor
+        Servo Servo1;
       </code></pre>
     </section>
     <br>
@@ -106,6 +111,10 @@
             delay(100);
           }
         }
+
+        Draw a graph with the x - axis as time and the y
+            - axis as voltage at pin 9 with respect to ground.
+
       </h3>
       <p>
         I think it can be either one. Since the direction of the voltage 
@@ -115,31 +124,18 @@
       </p>
       <br>
 
-Draw a graph with the x - axis as time and the y
-    - axis as voltage at pin 9 with respect to ground.
 
       2 : Your input device is slightly broken,
-    leading it to give us an erroneous reading 1
-        % of the time.How can we address this
-    ? Answer in(pseudo) code.
+          leading it to give us an erroneous reading 1
+          % of the time.How can we address this
+          ? Answer in(pseudo) code.
 
-      3
-    : Your input device is slightly noisy,
-    leading the measurement to randomly deviate from the
+      3: Your input device is slightly noisy,
+        leading the measurement to randomly deviate from the
         true measurement up or down by 10
         %.How can we address this
-    ? Answer in(pseudo) code.
+        ? Answer in(pseudo) code.
 
-      4
-    : Did you use AI tools in completing this assignment
-    ? If yes,
-    please provide details on how / when,
-    as well as a brief reflection.If you used an LLM,
-    please
-    'share' your conversation and include it as part of your submission,
-    or cite the prompt(s) you used and the output.If no,
-    you can either leave this question blank,
-    or provide other information if you'd like.
 
 
 
@@ -173,6 +169,21 @@ Draw a graph with the x - axis as time and the y
         map(sensorValue, sensorMin, sensorMax, 1023, 0);
       </p>
       <br>
+
+      <!-- Question 4 -->
+       <h3>
+        4: Did you use AI tools in completing this assignment
+          ? If yes,
+          please provide details on how / when,
+          as well as a brief reflection.If you used an LLM,
+          please
+          'share' your conversation and include it as part of your submission,
+          or cite the prompt(s) you used and the output.If no,
+          you can either leave this question blank,
+          or provide other information if you'd like.
+       </h3>
+       <p></p>
+       <br>
 
     </section>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.4.0/highlight.min.js"></script>
