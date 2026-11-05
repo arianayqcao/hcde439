@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, maximum-scale=1.0" />
+
+    <title>Ariana's HCDE 439 Physical Computing Page!</title>
+
+    <link href="style.css" rel="stylesheet" type="text/css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.4.0/styles/atom-one-dark.min.css">
+    <script src=”https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.4.0/highlight.min.js”></script>
+    <script>hljs.highlightAll();</script>
+  </head>
+  <body>
+    <h1>Ariana's Assignment 4: Libraries!</h1>
+    <div class="header">
+      <p>Here is all the documentation for assignment 3!</p>
+    </div>
+
+    <section>
+      <h2>Brief</h2>
+      <p>
+        You will create a schematic, circuit, and code that uses parts 
+        from your kit that require a library (e.g. the remote control, 
+        capacitive touch, or the servo motor), and includes both an input 
+        part (sensor, e.g. capacitive touch) and an output part 
+        (actuator, e.g. servo). Your schematic description should label 
+        all connections. You have to justify why you are using the values 
+        you chose in your code and what those values are corresponding 
+        to in your circuit! In your firmware, *if* you're using 
+        analogRead(), you must write some code that calibrates your 
+        sensor readings. Document your project on your webpage.  
+      </p>
+    </section>
+    <br>
+
+    <!-- Schematic -->
+    <section>
+      <h2>
+        Schematic
+      </h2>
+      <div class="image-placeholder">
+        <span>Document your schematic (as an image)</span>
+      </div>
+      <figure>
+        <img src="assets/a3/schematic.png" height="400px" alt="calculations and schematic">
+        <figcaption>
+          <!-- ACTION NEEDED: Write a caption. -->
+        </figcaption>
+      </figure>
+    </section>
+    <br>
+
+    <!-- Circuit -->
+    <section>
+      <h2>
+        Circuit
+      </h2>
+      <div class="image-placeholder">
+        <span>Document your circuit (as an image)</span>
+      </div>
+      <figure>
+        <img src="assets/a3/circuit.jpg" height="400px" alt="breadboard with three leds, one lit up">
+        <figcaption>
+          <!-- TO-DO: Write a caption. -->
+        </figcaption>
+      </figure>
+    </section>
+    <br>
+
+    <!-- Code Snippet -->
+    <section>
+      <h2>Code Snippet</h2>
+      <pre><code>
+      </code></pre>
+    </section>
+    <br>
+
+    <!-- Circuit Operation -->
+    <section>
+      <h2>
+        Circuit Operation
+      </h2>
+      <div class="image-placeholder">
+        <span>Document your circuit (as an animated gif)</span>
+      </div>
+    </section>
+    <br>
+
+    <!-- Additional Questions -->
+    <section>
+      <h2>Questions</h2>
+
+      <!-- Question 1: Chart -->
+      <h3>
+        1 : Say you are using a servo motor you attach to pin 9. In your
+            loop() you have the following code :
+
+            void loop() {
+          for (pos = 0; pos <= 180; pos += 1) {
+            myservo.write(pos);
+            delay(100);
+          }
+        }
+      </h3>
+      <p>
+        I think it can be either one. Since the direction of the voltage 
+        changes but the drop in voltage stays the same.
+
+
+      </p>
+      <br>
+
+Draw a graph with the x - axis as time and the y
+    - axis as voltage at pin 9 with respect to ground.
+
+      2 : Your input device is slightly broken,
+    leading it to give us an erroneous reading 1
+        % of the time.How can we address this
+    ? Answer in(pseudo) code.
+
+      3
+    : Your input device is slightly noisy,
+    leading the measurement to randomly deviate from the
+        true measurement up or down by 10
+        %.How can we address this
+    ? Answer in(pseudo) code.
+
+      4
+    : Did you use AI tools in completing this assignment
+    ? If yes,
+    please provide details on how / when,
+    as well as a brief reflection.If you used an LLM,
+    please
+    'share' your conversation and include it as part of your submission,
+    or cite the prompt(s) you used and the output.If no,
+    you can either leave this question blank,
+    or provide other information if you'd like.
+
+
+
+      <!-- Question 2 -->
+      <h3>
+        2: Draw a graph where the x-axis is time and the y-axis is 
+        voltage. Plot the voltage at V-measure (where your pin is 
+        reading the voltage) of your voltage divider of your shared 
+        gif/video.
+      </h3>
+      <figure>
+        <img>
+        <figcaption></figcaption>
+      </figure>
+      <br>
+
+      <!-- Question 3 -->
+      <h3>
+        3: AnalogWrite and analogRead are respectively 8-bit and 10-bit 
+        values. Imagine you had 10-bit PWM and a 16-bit analog-to-digital 
+        converter instead. How would this change your map() code? 
+        Explain your answer.
+      </h3>
+      <p>
+        Right now, my map() code is
+
+          int brightness = map(sensorValue, sensorMin, sensorMax, 255, 0);
+
+        With a 16-bit ADC and 10-bit PWM, it would probably become:
+
+        map(sensorValue, sensorMin, sensorMax, 1023, 0);
+      </p>
+      <br>
+
+    </section>
+  </body>
+</html>

@@ -54,6 +54,24 @@ h2 {
   margin-top: 2em;
 }
 
+.image-placeholder {
+  width: 300px;
+  height: 200px;
+  background-color: #e0e0e0; /* Gray placeholder box */
+  color: #666666;             /* Text color */
+  font-family: sans-serif;
+  font-weight: bold;
+  
+  /* Centers the text perfectly inside the box */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  
+  /* Optional visual styling */
+  border: 2px dashed #cccccc; 
+  border-radius: 4px;
+}
+
 .assignment a {
   color: #000;
   text-decoration: none;
