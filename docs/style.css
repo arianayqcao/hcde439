@@ -37,6 +37,10 @@ h2 {
   font-weight: 700;
 }
 
+section {
+  margin-top: 32px;
+}
+
 .header {
   display: flex;
   gap: 1em;
