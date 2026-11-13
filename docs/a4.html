@@ -68,11 +68,166 @@
     <section>
       <h2>Code Snippet</h2>
       <pre><code class="language-cpp">
-        // include Servo library to control the servor motor
-        #include &lt;Servo.h&gt;>
+        // access LCD library
+        #include &lt;LiquidCrystal.h&gt;
+        // access servo library
+        #include &lt;Servo.h&gt;
 
-        // create a servo object to control the servo motor
-        Servo Servo1;
+        // create Servo object to control a servo
+        Servo myservo;
+
+        // connects digital pin 7 to button
+        int buttonPin = 7;
+        // create button state variable
+        int buttonState;
+
+        // connects analog pin to potentiometer
+        int potpin = A0;
+        // variable to read value from potpin
+        int val; 
+
+        // match any needed LCD interface pin with the arduino pin number it is connected to
+        // connected contrast to pin~6 because Servo library disables analogwrite on 9 and 10
+        const int rs = 12, en = 11, v0 = 6, d4 = 5, d5 = 4, d6 = 3, d7 = 2;
+        // initialize the library
+        LiquidCrystal lcd(rs, en, d4, d5, d6, d7);
+
+        // create secret combo array
+        int combo[] = {1, 0, 1, 9};
+        // create array for guesses input
+        int guesses[4];
+
+        // create variable to store guesses
+        int guesscounter = 0;
+
+        // function if the guess is right, compares the two arrays, returns true if matches
+        bool arraysMatch(int combo[], int guesses[]) {
+          // loops through length of array
+          for (int i = 0; i &lt; 4; i++) {
+            // if anywhere doesn't match...
+            if (combo[i] != guesses[i]) {
+              // return false
+              return false;
+            }
+          }
+
+          // if none of them returned false, then true!
+          return true;
+        }
+
+        // setup code here runs once:
+        void setup() {
+          // send PWM signal to set contrast
+          analogWrite(v0, 150);
+          // set up the LCD's number of columns and rows:
+          lcd.begin(16, 2);
+
+          // set button as input: button unpressed = open (HIGH 5V), button pressed = closed (LOW)
+          pinMode(buttonPin, INPUT_PULLUP);
+
+          // attaches servo on pin 9 to Servo object
+          myservo.attach(9);
+
+          // starting message
+          lcd.print("TOP SECRET");
+          // show msg
+          delay(1000);
+          // clear
+          lcd.clear();
+          // blink clear
+          delay(500);
+          // blink msg
+          lcd.print("TOP SECRET");
+          // show msg
+          delay(1000);
+          // clear
+          lcd.clear();
+          // blink clear
+          delay(500);
+          // blink msg
+          lcd.print("TOP SECRET");
+          // blink msg
+          delay(1000);
+          // blink clear
+          lcd.clear();
+          // blink
+          delay(500);
+        }
+
+        // main code, runs repeatedly:
+        void loop() {
+
+          // use a for loop to run through guesses
+          for (int guesscounter = 0; guesscounter &lt; 4; guesscounter++) {
+
+            // clear before starting
+            lcd.clear();
+
+            // prompt user to enter digit
+            lcd.print("Enter digit #");
+            // digit that we're on
+            lcd.print(guesscounter);
+            // print colon
+            lcd.print(": ");
+
+            // WAIT until button is pressed!!! while button is NOT pressed...
+            // moved digital read directly in while loop so it constantly reads rather than updating each time
+            while (digitalRead(buttonPin) == HIGH) {
+              // move cursor down to start typing digit
+              lcd.setCursor(0, 1);
+              // read value of potentiometer (value between 0 and 1023)
+              val = analogRead(potpin);
+              // maps potentiometer's range (0 - 1023) to digit range (0 - 9) visible on LCD
+              // changed to 1017 because 1023 / 9 = 113.66666... so rounded out so 9 is mapped to as an integer!
+              val = map(val, 0, 1017, 0, 9);
+              // print mapped value, now should be digit between 0 and 9
+              lcd.print(val);
+              // keep display from flickering
+              delay(100);
+            }
+
+            // button was pressed! exit out of while loop and save digit in guesses
+            guesses[guesscounter] = val;
+
+            // clear screen
+            lcd.clear();
+            // print confirmation
+            lcd.print("Entered");
+            // let message show
+            delay(3000);
+          }
+
+          // clear message
+          lcd.clear();
+          // use function check if arrays match
+          if (arraysMatch(combo, guesses)) {
+            // print unlocked message
+            lcd.print("UNLOCKED");
+            // UNLOCKED! open servo
+            myservo.write(180);
+            // keep unlocked for 10 seconds
+            delay(10000);
+            // lock again
+            myservo.write(0);
+            // clear screen
+            lcd.clear();
+            // print locked message
+            lcd.print("LOCKED. Enter again.");
+            // display msg
+            delay(2000);
+            // clear again for next msg
+            lcd.clear();
+
+            // if it doesn't match
+          } else {
+            // print wrong
+            lcd.print("WRONG");
+            // display msg
+            delay(2000);
+            // clear again for next msg
+            lcd.clear();
+          }
+        }
       </code></pre>
     </section>
     <br>
