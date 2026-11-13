@@ -129,6 +129,9 @@
           // attaches servo on pin 9 to Servo object
           myservo.attach(9);
 
+          // calibration code for potentiometer - ADDED
+          analogRead = 
+
           // starting message
           lcd.print("TOP SECRET");
           // show msg
@@ -230,6 +233,19 @@
           }
         }
       </code></pre>
+    </section>
+    <br>
+
+    <!-- Note about code -->
+    <section>
+      <h3>
+        Note
+      </h3>
+      <p>
+        Sorry, I just realized I forgot to calibrate my readings since I used analogRead(). 
+        I already took apart my circuit, so I just added the code for if I did the calibration. 
+        I used 1017 as a hard code for max before I calibrated.
+      </p>
     </section>
     <br>
 
@@ -340,6 +356,10 @@
        <p>
         I don't think I learned some of the concepts here so I asked Claude to teach me.
         Chat: https://claude.ai/share/a36f2f0b-e6f9-481f-ba7a-6d49fc18a6dc
+       </p>
+       <p>
+        Also used it to help see what's missing.
+        Chat: https://claude.ai/share/a9521c3c-a561-4eca-ae35-dc26f8b26efb
        </p>
        <br>
 
