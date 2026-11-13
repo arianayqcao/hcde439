@@ -118,6 +118,33 @@
 
         // setup code here runs once:
         void setup() {
+
+          // since we're calibrating, need to use serial - ADDED
+          Serial.begin(9600);
+          // print message 
+          Serial.println("Calibrating...");
+
+          // start while loop since arduino started until 6 seconds
+          while (millis() - 6000) {
+            // read potentiometer into value
+            val = analogRead(potpin);
+            // if value is less than the current minimum
+            if (val &lt; potMin) {
+              // reset min to val
+              potMin = val;
+            };
+            // if value is more than the current maximum
+            if (val &gt; potMax) {
+              // reset max to val
+              potMax = val;
+            };
+          }
+
+          Serial.print("Calibrated. Min: ");
+          Serial.print(potMin);
+          Serial.print("  Max: ");
+          Serial.println(potMax);
+
           // send PWM signal to set contrast
           analogWrite(v0, 150);
           // set up the LCD's number of columns and rows:
@@ -128,9 +155,6 @@
 
           // attaches servo on pin 9 to Servo object
           myservo.attach(9);
-
-          // calibration code for potentiometer - ADDED
-          analogRead = 
 
           // starting message
           lcd.print("TOP SECRET");
@@ -182,8 +206,9 @@
               // read value of potentiometer (value between 0 and 1023)
               val = analogRead(potpin);
               // maps potentiometer's range (0 - 1023) to digit range (0 - 9) visible on LCD
-              // changed to 1017 because 1023 / 9 = 113.66666... so rounded out so 9 is mapped to as an integer!
-              val = map(val, 0, 1017, 0, 9);
+              // originally changed to 1017 because 1023 / 9 = 113.66666... so rounded out so 9 is mapped to as an integer!
+              // but now using calibrated numbers
+              val = map(val, potMin, potMax, 0, 9);
               // print mapped value, now should be digit between 0 and 9
               lcd.print(val);
               // keep display from flickering
