@@ -86,6 +86,10 @@
         int potpin = A0;
         // variable to read value from potpin
         int val; 
+        // initialize minimum value for calibrating 
+        int potMin = 1023;
+        // initialize max value for calibrating
+        int potMax = 0;
 
         // match any needed LCD interface pin with the arduino pin number it is connected to
         // connected contrast to pin~6 because Servo library disables analogwrite on 9 and 10
